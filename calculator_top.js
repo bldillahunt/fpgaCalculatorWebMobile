@@ -339,6 +339,9 @@ function getSelectedRadio(name) {
     return checked ? checked.value : "REAL";
 }
 
+let currentOutputValue = "";
+let currentOutputType = "";
+
 function processButton(val) {
     if (val === "R" || val === "Reset") {
         inputBox.value = "";
@@ -362,9 +365,36 @@ function processButton(val) {
         );
         inputBox.value = mainVal;
         outputBox.textContent = calcResult;
-    } else if (val === "Back") {
+		currentOutputValue = calcResult;
+		currentOutputType = outputMode;
+    }
+    else if (val === "Back")
+    {
         inputBox.value = inputBox.value.slice(0, -1);
-    } else {
+    }
+	else if (val === 'Type') {
+		if (currentOutputValue !== "" && currentOutputValue !== "ERROR") {
+			const outputMode = getSelectedRadio("output_mode");
+			const intBits = parseInt(intBitsBox.value, 10) || 16;
+			const fracBits = parseInt(fracBitsBox.value, 10) || 16;
+       		console.log('Input = ', currentOutputValue, 'Input type = ', currentOutputType, 'Output type = ', outputMode);
+
+			const [updated_main, updated_aux] = compute_evaluation_step(
+				currentOutputValue,
+				currentOutputType,
+				outputMode,
+				intBits,
+				fracBits,
+				false
+			);
+
+			// Render back to UI
+//			inputBox.value = mainVal;
+			outputBox.textContent = updated_aux;
+		}
+	}
+    else
+    {
         inputBox.value += val;
     }
 }
@@ -392,6 +422,11 @@ useKeypadCheckbox.addEventListener('change', () => {
         pcButtonsContainer.style.display = 'flex';
         inputBox.removeAttribute('readonly');
     }
+});
+
+// Trigger off of a change to the output format
+document.getElementById('output_mode_container').addEventListener('change', function() {
+	processButton('Type');
 });
 
 document.getElementById('btn_help').addEventListener('click', () => {

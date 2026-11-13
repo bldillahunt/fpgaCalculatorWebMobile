@@ -247,7 +247,7 @@
         </div>
 
         <label class="field-label">Input Format</label>
-        <div class="radio-group">
+        <div class="radio-group" id="input_mode_container">
             <label><input type="radio" name="input_mode" value="REAL" checked> REAL</label>
             <label><input type="radio" name="input_mode" value="HEX"> HEX</label>
             <label><input type="radio" name="input_mode" value="BIN"> BIN</label>
@@ -256,7 +256,7 @@
         </div>
 
         <label class="field-label">Output Format</label>
-        <div class="radio-group">
+        <div class="radio-group" id="output_mode_container">
             <label><input type="radio" name="output_mode" value="REAL" checked> REAL</label>
             <label><input type="radio" name="output_mode" value="HEX"> HEX</label>
             <label><input type="radio" name="output_mode" value="BIN"> BIN</label>
@@ -343,6 +343,13 @@
 			<p>
 			  The <strong>Integer Bits</strong> and <strong>Fraction Bits</strong> settings control the fixed-point precision used for hexadecimal entries and division results.
 			</p>
+
+			<h3>Instant Output Switching:</h3>
+			<ul>
+			  <li>
+				Whenever a result is in the Output box, changing the <strong>Output Format</strong> radio button immediately converts that value without losing original precision.
+			  </li>
+			</ul>
 
 			<p style="margin-top: 8px;">
 			  Found a bug or have a feature request?
